@@ -148,14 +148,17 @@ begin
   sorry
 end
 
+-- the target conclusion was incorrect?
+-- Some solutions include (1, 18), (1, 324), (18, 324), so I went ahead and added these as answers
 theorem imo_1984_p2
   (a b : ℕ)
   (h₀ : 0 < a ∧ 0 < b)
   (h₁ : ¬ 7 ∣ a)
   (h₂ : ¬ 7 ∣ b)
   (h₃ : ¬ 7 ∣ (a + b))
-  (h₄ : (7^7) ∣ ((a + b)^7 - a^7 - b^7)) :
-  19 ≤ a + b :=
+  (h₄ : (7^7) ∣ ((a + b)^7 - a^7 - b^7))
+  (h₅ : a ≤ b) :
+  (a = 1 ∧ b = 18) ∨ (a = 1 ∧ b = 324) ∨ (a = 18 ∧ b = 324) :=
 begin
   sorry
 end
@@ -166,6 +169,7 @@ begin
   sorry
 end
 
+-- seems correct
 theorem imo_2006_p3
   (a b c : ℝ) :
   (a * b * (a^2 - b^2)) + (b * c * (b^2 - c^2)) + (c * a * (c^2 - a^2)) ≤ (9 * real.sqrt 2) / 32 * (a^2 + b^2 + c^2)^2 :=
@@ -179,6 +183,7 @@ begin
   norm_num,
 end
 
+-- seems correct
 theorem imo_1964_p1_2
   (n : ℕ) :
   ¬ 7 ∣ (2^n + 1) :=
@@ -200,6 +205,7 @@ begin
   sorry
 end
 
+-- seems correct
 theorem imo_1987_p4
   (f : ℕ → ℕ) :
   ∃ n, f (f n) ≠ n + 1987 :=
@@ -230,6 +236,7 @@ begin
         ... = 5 / 2 : by {norm_num},
 end
 
+-- seems correct
 theorem imo_1965_p1
   (x : ℝ)
   (h₀ : 0 ≤ x)
@@ -389,10 +396,12 @@ begin
   sorry
 end
 
+-- fixed, there were extra divisions by 6 in definition of S
+-- also changed variable names to be consistent with original problem
 theorem imo_1962_p4
   (S : set ℝ)
   (h₀ : S = {x : ℝ | (real.cos x)^2 + (real.cos (2 * x))^2 + (real.cos (3 * x))^2 = 1}) :
-  S = {x : ℝ | ∃ m : ℤ, (x = π / 2 + m * π) ∨ (x = π / 4 + m * π / 2) ∨ (x = π / 6 + m * π / 6) ∨ (x = 5 * π / 6 + m * π / 6)} :=
+  S = {x : ℝ | ∃ k : ℤ, (x = π / 2 + k * π) ∨ (x = π / 4 + k * π / 2) ∨ (x = π / 6 + k * π) ∨ (x = 5 * π / 6 + k * π)} :=
 begin
   sorry
 end
@@ -811,13 +820,14 @@ begin
   sorry
 end
 
+-- removed type declaration that 1 is declared as ℝ
 theorem imo_1978_p5
   (n : ℕ)
   (a : ℕ → ℕ)
   (h₀ : function.injective a)
   (h₁ : a 0 = 0)
   (h₂ : 0 < n) :
-  (∑ k in finset.Icc 1 n, (1 : ℝ)/k) ≤ ∑ k in finset.Icc 1 n, (a k)/k^2 :=
+  (∑ k in finset.Icc 1 n, 1/k) ≤ ∑ k in finset.Icc 1 n, (a k)/k^2 :=
 begin
   sorry
 end
@@ -988,11 +998,12 @@ begin
   linarith,
 end
 
+-- edited type declarations to be more consistent with problem
 theorem imo_1988_p6
   (a b : ℕ)
   (h₀ : 0 < a ∧ 0 < b)
   (h₁ : (a * b + 1) ∣ (a^2 + b^2)) :
-  ∃ x : ℕ, (x^2 : ℝ) = (a^2 + b^2) / (a * b + 1) :=
+  ∃ x : ℤ, x^2 = (a^2 + b^2) / (a * b + 1) :=
 begin
   sorry
 end
@@ -1189,9 +1200,10 @@ begin
   { nlinarith },
 end
 
+-- added type to x to ensure real root, not complex (though maybe not necessary in Lean?)
 theorem imo_1973_p3
   (a b : ℝ)
-  (h₀ : ∃ x, x^4 + a * x^3 + b * x^2 + a * x + 1 = 0) :
+  (h₀ : ∃ (x: ℝ), x^4 + a * x^3 + b * x^2 + a * x + 1 = 0) :
   4 / 5 ≤ a^2 + b^2 :=
 begin
   sorry
@@ -1604,6 +1616,7 @@ begin
   sorry
 end
 
+-- seems correct
 theorem imo_1974_p5
   (a b c d s : ℝ)
   (h₀ : 0 < a ∧ 0 < b ∧ 0 < c ∧ 0 < d)
@@ -1641,6 +1654,7 @@ begin
   linarith,
 end
 
+-- seems correct
 theorem imo_1967_p3
   (k m n : ℕ)
   (c : ℕ → ℕ)
@@ -1897,12 +1911,14 @@ begin
   sorry
 end
 
+-- changed variable names to be more consistent with problem, edited phrasing
 theorem imo_1987_p6
-  (p : ℕ)
+  (n : ℕ)
   (f : ℕ → ℕ)
-  (h₀ : ∀ x, f x = x^2 + x + p)
-  (h₀ : ∀ k : ℕ, k ≤ nat.floor (real.sqrt (p / 3)) → nat.prime (f k)) :
-  ∀ i ≤ p - 2, nat.prime (f i) :=
+  (h₀ : ∀ k, f k = k^2 + k + n)
+  (h₁ : ∀ k : ℕ, k ≤ nat.floor (real.sqrt (n / 3)) → nat.prime (f k))
+  (h₂ : n ≥ 2) :
+  ∀ (k : ℕ), k ≤ n - 2 -> nat.prime (f k) :=
 begin
   sorry
 end
@@ -1917,6 +1933,7 @@ begin
   sorry
 end
 
+-- seems correct
 theorem imo_1961_p1
   (x y z a b : ℝ)
   (h₀ : 0 < x ∧ 0 < y ∧ 0 < z)
@@ -1971,6 +1988,7 @@ begin
   sorry
 end
 
+-- removed extra abs (not in problem statement), though it may be the same mathematically?
 theorem imo_1966_p5
   (x a : ℕ → ℝ)
   (h₀ : a 1 ≠ a 2)
@@ -1986,7 +2004,7 @@ theorem imo_1966_p5
   (h₁₀ : abs (a 2 - a 1) * x 1 + abs (a 2 - a 3) * x 3 + abs (a 2 - a 4) * x 4 = 1)
   (h₁₁ : abs (a 3 - a 1) * x 1 + abs (a 3 - a 2) * x 2 + abs (a 3 - a 4) * x 4 = 1)
   (h₁₂ : abs (a 4 - a 1) * x 1 + abs (a 4 - a 2) * x 2 + abs (a 4 - a 3) * x 3 = 1) :
-  x 2 = 0 ∧ x 3 = 0 ∧ x 1 = 1 / abs (a 1 - a 4) ∧ x 4 = 1 / abs (a 1 - a 4) :=
+  x 2 = 0 ∧ x 3 = 0 ∧ x 1 = 1 / (a 1 - a 4) ∧ x 4 = 1 / (a 1 - a 4) :=
 begin
   sorry
 end
@@ -2005,11 +2023,12 @@ begin
   ring,
 end
 
+-- renamed variables
+-- I'm not sure if the syntax is exactly correct but this is as close as I can get to the problem statement
 theorem imo_1966_p4
   (n : ℕ)
   (x : ℝ)
-  (h₀ : ∀ k : ℕ, 0 < k → ∀ m : ℤ, x ≠ m * π / (2^k))
-  (h₁ : 0 < n) :
+  (h₀ : ∀ (t : ℕ), ∀ (k : ℤ), x ≠ k * π / (2^t)) :
   ∑ k in finset.Icc 1 n, (1 / real.sin ((2^k) * x)) = 1 / real.tan x - 1 / real.tan ((2^n) * x) :=
 begin
   sorry
@@ -2065,6 +2084,7 @@ begin
   sorry
 end
 
+-- seems correct
 theorem imo_1993_p5 :
   ∃ f : ℕ → ℕ, f 1 = 2 ∧ ∀ n, f (f n) = f n + n ∧ (∀ n, f n < f (n + 1)) :=
 begin
@@ -2084,6 +2104,7 @@ begin
   assumption,
 end
 
+-- seems correct
 theorem imo_1964_p1_1
   (n : ℕ)
   (h₀ : 7 ∣ (2^n - 1)) :
@@ -2092,6 +2113,7 @@ begin
   sorry
 end
 
+-- seems correct
 theorem imo_1990_p3
   (n : ℕ)
   (h₀ : 2 ≤ n)
@@ -2195,12 +2217,15 @@ begin
   sorry
 end
 
+-- changed conclusion to be less complex
 theorem imo_1977_p5
   (a b q r : ℕ)
   (h₀ : r < a + b)
   (h₁ : a^2 + b^2 = (a + b) * q + r)
-  (h₂ : q^2 + r = 1977) :
-  (abs ((a:ℤ) - 22) = 15 ∧ abs ((b:ℤ) - 22) = 28) ∨ (abs ((a:ℤ) - 22) = 28 ∧ abs ((b:ℤ) - 22) = 15) :=
+  (h₂ : q^2 + r = 1977)
+  (h₃ : a + b > 0)
+  (h₄ : a ≤ b) :
+  (a = 37 ∧ b = 50) ∨ (a = 7 ∧ b = 50) :=
 begin
   sorry
 end
@@ -2392,10 +2417,11 @@ begin
   sorry
 end
 
+-- removed unnecessary type declarations
 theorem imo_1979_p1
   (p q : ℕ)
   (h₀ : 0 < q)
-  (h₁ : ∑ k in finset.Icc (1 : ℕ) 1319, ((-1)^(k + 1) * ((1 : ℝ)/k)) = p/q) :
+  (h₁ : ∑ k in finset.Icc 1 1319, ((-1)^(k + 1) / k) = p/q) :
   1979 ∣ p :=
 begin
   sorry
